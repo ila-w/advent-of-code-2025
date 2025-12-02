@@ -30,33 +30,82 @@ class DoublyCircularLinkedList:
 
 # Processes the instructions given and returns 
 # the resulting location.
-def get_rotated(input):
+def get_rotated_part_one(input, start):
     result = 0
 
-    instructions = "".split(input)
+    instructions = input.split()
     
     dial = DoublyCircularLinkedList()
     for i in range(100):
         dial.append(i)
+    
+    current = dial.head
 
+    for i in range(start):
+        current = current.next
 
     for item in instructions:
         direction = item[0]
-        amount = item[1:]
+        amount = int(item[1:])
 
+        for i in range(amount):
+            if direction == "L":
+                current = current.prev
+            else:
+                current = current.next
         
+        if current.data == 0:
+            result += 1
+
+    return result
 
 
+# Processes the instructions given and returns 
+# the resulting location.
+def get_rotated_part_two(input, start):
+    result = 0
 
+    instructions = input.split()
+    
+    dial = DoublyCircularLinkedList()
+    for i in range(100):
+        dial.append(i)
+    
+    current = dial.head
 
+    for i in range(start):
+        current = current.next
 
+    for item in instructions:
+        direction = item[0]
+        amount = int(item[1:])
+
+        for i in range(amount):
+            if current.data == 0:
+                result += 1
+
+            if direction == "L":
+                current = current.prev
+            else:
+                current = current.next
 
     return result
 
 # default input given from problem statement
 input = "L68 L30 R48 L5 R60 L55 L1 L99 R14 L82"
+start = 50
+
+# Helps with parsing out the input file for my specific puzzle
+#puzzle = ""
+#with open("./day1/input.txt") as f:
+#    file = f.read().splitlines()
+#puzzle = " ".join(file)
 
 
+# Prints out the results
+print(get_rotated_part_one(input, start))
+print(get_rotated_part_two(input, start))
 
-# print results
-print(get_rotated(input))
+# My specific puzzle method calls
+#print(get_rotated_part_one(puzzle, start))
+#print(get_rotated_part_two(puzzle, start))
